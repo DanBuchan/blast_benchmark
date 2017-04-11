@@ -21,5 +21,5 @@ def run_blast(file):
 fasta_dir = "/cs/research/bioinf/home1/green/dbuchan/archive0/eigen_thread" \
             "/eigenthreader/seq_files/"
 # fasta= open("pdb_2015.fasta", "w")
-p = Pool(sys.argv[1])
+p = Pool(int(sys.argv[1]))
 p.map(run_blast, glob.glob(sys.argv[2]+"*.fasta"))
