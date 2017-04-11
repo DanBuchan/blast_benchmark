@@ -15,9 +15,9 @@ def run_blast(file):
     print(seq_name)
     exe = "time /usr/local/bin/psiblast"
     db = "/data/uniref/uniref90.fasta"
-    stdout = Popen([exe, "-query", file, "-out",
-                    sys.argv[3]+"/"+seq_name+".bls", "-db", db],
-                    stdout=subprocess.PIPE)
+    stdout = subprocess.Popen([exe, "-query", file, "-out",
+                              sys.argv[3]+"/"+seq_name+".bls", "-db", db],
+                              stdout=subprocess.PIPE)
     print(seq_name+" : "+str(stdout))
 
 
