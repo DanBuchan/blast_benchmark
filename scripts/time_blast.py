@@ -12,8 +12,9 @@ pp = pprint.PrettyPrinter(indent=4)
 
 
 def run_blast(file):
-    seq_name = file[0:-6]
-    print(seq_name)
+    seq_path = file[0:-6]
+    print(seq_path)
+    seq_name = seq_path.split("/")[-1]
     exe = "/usr/bin/time /usr/local/bin/psiblast"
     db = "/data/uniref/uniref90.fasta"
     cmd = exe+" -query "+file+" -out "+sys.argv[3]+"/"+seq_name+".bls -db "+db
