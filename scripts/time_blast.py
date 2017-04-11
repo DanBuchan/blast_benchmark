@@ -13,15 +13,17 @@ pp = pprint.PrettyPrinter(indent=4)
 
 def run_blast(file):
     seq_path = file[0:-6]
-    # print(seq_path)
+    print(seq_path)
     seq_name = seq_path.split("/")[-1]
     exe = "/usr/bin/time /usr/local/bin/psiblast"
     db = "/data/uniref/uniref90.fasta"
-    cmd = exe+" -query "+file+" -out "+sys.argv[3]+seq_name+".bls -db "+db
-    print(cmd)
-    p = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE)
-    p.wait()
-    print(seq_name+" : "+str(p.stdout))
+    for i in range(1, 11):
+        cmd = exe+" -query "+file+" -out "+sys.argv[3]+seq_name+".bls -db " + \
+              db+" -num_threads "+str(i)
+        print("threads : "+str(i))
+        p = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE)
+        p.wait()
+        print(seq_name+" : "+str(p.stdout))
 
 
 # fasta= open("pdb_2015.fasta", "w")
