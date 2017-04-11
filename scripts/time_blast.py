@@ -1,4 +1,5 @@
 import glob
+import shlex
 import subprocess
 import pprint
 from multiprocessing import Pool
@@ -15,9 +16,11 @@ def run_blast(file):
     print(seq_name)
     exe = "/usr/bin/time /usr/local/bin/psiblast"
     db = "/data/uniref/uniref90.fasta"
-    stdout = subprocess.Popen([exe, "-query", file, "-out",
-                              sys.argv[3]+"/"+seq_name+".bls", "-db", db],
-                              stdout=subprocess.PIPE)
+    cmd = exe+" -query "+file+" -out "+sys.argv[3]+"/"+seq_name+".bls -db "+db
+    print(cmd)
+    # stdout = subprocess.Popen([exe, "-query", file, "-out",
+    #                           sys.argv[3]+"/"+seq_name+".bls", "-db", db],
+    #                           stdout=subprocess.PIPE)
     print(seq_name+" : "+str(stdout))
 
 
