@@ -8,8 +8,6 @@ pp = pprint.PrettyPrinter(indent=4)
 # arg 1 : pool size
 # arg 2 : directory
 # arg 3 : ouput dir
-print(sys.argv[1])
-exit(1)
 
 
 def run_blast(file):
