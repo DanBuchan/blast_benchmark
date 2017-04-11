@@ -21,7 +21,7 @@ def run_blast(file):
     # stdout = subprocess.Popen([exe, "-query", file, "-out",
     #                           sys.argv[3]+"/"+seq_name+".bls", "-db", db],
     #                           stdout=subprocess.PIPE)
-    print(seq_name+" : "+str(stdout))
+    #print(seq_name+" : "+str(stdout))
 
 
 # fasta= open("pdb_2015.fasta", "w")
