@@ -19,8 +19,9 @@ def run_blast(file):
     db = "/data/uniref/uniref90.fasta"
     cmd = exe+" -query "+file+" -out "+sys.argv[3]+seq_name+".bls -db "+db
     print(cmd)
-    stdout = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE)
-    print(seq_name+" : "+str(stdout))
+    p = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE)
+    p.wait()
+    print(seq_name+" : "+str(p.stdout))
 
 
 # fasta= open("pdb_2015.fasta", "w")
