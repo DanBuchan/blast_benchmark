@@ -13,7 +13,7 @@ pp = pprint.PrettyPrinter(indent=4)
 def run_blast(file):
     seq_name = file[0:-6]
     print(seq_name)
-    exe = "time /usr/local/bin/psiblast"
+    exe = "/usr/bin/time /usr/local/bin/psiblast"
     db = "/data/uniref/uniref90.fasta"
     stdout = subprocess.Popen([exe, "-query", file, "-out",
                               sys.argv[3]+"/"+seq_name+".bls", "-db", db],
