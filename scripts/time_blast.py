@@ -24,9 +24,10 @@ def run_blast(file):
         p = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
         p.wait()
-        print(seq_name+" : "+p.stderr.read().decode())
+        print(seq_name+","+i+","+p.stderr.read().decode())
 
 
 # fasta= open("pdb_2015.fasta", "w")
 p = Pool(int(sys.argv[1]))
+print("seq,cores,time_output")
 p.map(run_blast, glob.glob(sys.argv[2]+"*.fasta"))
