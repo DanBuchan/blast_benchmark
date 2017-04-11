@@ -13,7 +13,7 @@ exit(1)
 
 
 def run_blast(file):
-    seq_name = file[-11:-6]
+    seq_name = file[0:-6]
     print(seq_name)
     # exe = "/usr/local/bin/psiblast"
     # db = "/data/uniref/uniref90.fasta"
