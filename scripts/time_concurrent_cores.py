@@ -25,8 +25,7 @@ def run_blast(file):
     print(seq_name+","+str(i)+","+p.stderr.read().decode())
 
 
-seq = "/home/dbuchan/blast_benchmark/home/dbuchan/blast_benchmark/" + \
-    "example_sequences/iga1C.fasta"
+seq = "/home/dbuchan/blast_benchmark/example_sequences/iga1C.fasta"
 process_list = []
 
 print("seq,cores/concurrency,time_output")
