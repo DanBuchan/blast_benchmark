@@ -5,6 +5,9 @@ import pprint
 from multiprocessing import Pool
 import sys
 
+# Time blast as we increase the number of cores over the core test set
+
+
 pp = pprint.PrettyPrinter(indent=4)
 # arg 1 : pool size
 # arg 2 : directory
