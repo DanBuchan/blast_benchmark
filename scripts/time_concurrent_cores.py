@@ -7,6 +7,7 @@ import sys
 
 pp = pprint.PrettyPrinter(indent=4)
 # arg 1 : ouput dir
+# arg 2 : max concurrency (48)
 
 
 def run_blast(file):
@@ -15,7 +16,7 @@ def run_blast(file):
     seq_name = seq_path.split("/")[-1]
     exe = "/usr/bin/time /usr/local/bin/psiblast"
     # db = "/data/uniref/uniref90.fasta"
-    db = "/dev/shm/uniref/uniref90.fasta"
+    db = "/data/uniref/uniref90.fasta"
 
     cmd = exe+" -query "+file+" -out "+sys.argv[1]+seq_name+".bls -db " + \
         db+" -num_threads 1"
@@ -30,7 +31,7 @@ process_list = []
 
 print("seq,cores/concurrency,time_output")
 # fasta= open("pdb_2015.fasta", "w")
-for i in range(5, 49):
+for i in range(5, int(sys.argv[1])+1):
     process_list += i * [seq]
     p = Pool(i)
     p.map(run_blast, process_list)
