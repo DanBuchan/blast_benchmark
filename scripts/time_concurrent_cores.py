@@ -6,9 +6,7 @@ from multiprocessing import Pool
 import sys
 
 pp = pprint.PrettyPrinter(indent=4)
-# arg 1 : pool size
-# arg 2 : directory
-# arg 3 : ouput dir
+# arg 1 : ouput dir
 
 
 def run_blast(file):
@@ -19,7 +17,7 @@ def run_blast(file):
     # db = "/data/uniref/uniref90.fasta"
     db = "/dev/shm/uniref/uniref90.fasta"
 
-    cmd = exe+" -query "+file+" -out "+sys.argv[3]+seq_name+".bls -db " + \
+    cmd = exe+" -query "+file+" -out "+sys.argv[1]+seq_name+".bls -db " + \
         db+" -num_threads 1"
     p = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
