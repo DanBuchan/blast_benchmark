@@ -12,14 +12,17 @@ pp = pprint.PrettyPrinter(indent=4)
 
 
 def run_blast(data):
-    seq_path = file[0:-6]
+
+    file_count = data.split("_", 1)[1]
+    file_name = data.split("_", 1)[0]
+    seq_path = file_name[0:-6]
     # print(seq_path)
     seq_name = seq_path.split("/")[-1]
     exe = "/usr/bin/time /usr/local/bin/psiblast"
     # db = "/data/uniref/uniref90.fasta"
     db = "/data/uniref/uniref90.fasta"
 
-    cmd = exe+" -query "+data[0]+" -out "+sys.argv[1]+seq_name+str(data[1]) + \
+    cmd = exe+" -query "+file_name+" -out "+sys.argv[1]+seq_name+file_count + \
         ".bls -db "+db+" -num_threads 1"
     p = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
@@ -37,7 +40,7 @@ print("seq,cores/concurrency,type,time_output")
 for i in range(5, int(sys.argv[2])+1):
     process_list = []
     for j in range(1, i+1):
-        process_list.append([seq, j])
+        process_list.append([seq+"_"+str(j)])
     start_time = time.time()
     p = Pool(i)
     p.map(run_blast, process_list)
