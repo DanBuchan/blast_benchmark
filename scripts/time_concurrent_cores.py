@@ -10,17 +10,19 @@ pp = pprint.PrettyPrinter(indent=4)
 # arg 1 : ouput dir
 # arg 2 : max concurrency (48)
 
+file_count = 0
 
 def run_blast(file):
     seq_path = file[0:-6]
+    file_count += 1
     # print(seq_path)
     seq_name = seq_path.split("/")[-1]
     exe = "/usr/bin/time /usr/local/bin/psiblast"
     # db = "/data/uniref/uniref90.fasta"
     db = "/data/uniref/uniref90.fasta"
 
-    cmd = exe+" -query "+file+" -out "+sys.argv[1]+seq_name+".bls -db " + \
-        db+" -num_threads 1"
+    cmd = exe+" -query "+file+" -out "+sys.argv[1]+seq_name+str(file_count) + \
+        ".bls -db "+db+" -num_threads 1"
     p = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
     p.wait()
