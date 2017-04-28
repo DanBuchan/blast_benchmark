@@ -24,21 +24,21 @@ def run_blast(file):
     p = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
     p.wait()
-    print(seq_name+","+str(i)+","+p.stderr.read().decode())
+    print(seq_name+","+str(i)+",blast_run,"+p.stderr.read().decode())
     sys.stdout.flush()
 
 
 seq = "/home/dbuchan/blast_benchmark/example_sequences/iga1C.fasta"
 process_list = []
 
-start_time = time.time()
-print("seq,cores/concurrency,time_output,type")
+print("seq,cores/concurrency,type,time_output")
 # fasta= open("pdb_2015.fasta", "w")
 for i in range(5, int(sys.argv[2])+1):
     start_time = time.time()
     process_list += i * [seq]
     p = Pool(i)
     p.map(run_blast, process_list)
-
-end_time = time.time()
-print("Elapsed time was %g seconds" % (end_time - start_time))
+    end_time = time.time()
+    batch_time = end_time - start_time
+    print(str(i)+","+str(i)+",batch,"+str(batch_time))
+    sys.stdout.flush()
