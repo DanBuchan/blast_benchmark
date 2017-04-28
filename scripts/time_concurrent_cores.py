@@ -23,6 +23,7 @@ def run_blast(data):
 
     cmd = exe+" -query "+file_name+" -out "+sys.argv[1]+seq_name+file_count + \
         ".bls -db "+db+" -num_threads 1"
+    print(cmd)
     p = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
     p.wait()
