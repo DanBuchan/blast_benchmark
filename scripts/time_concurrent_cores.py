@@ -24,7 +24,9 @@ def run_blast(file):
     p = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
     p.wait()
-    print(seq_name+","+str(i)+",blast_run,"+p.stderr.read().decode())
+    time_out = p.stderr.read().decode()
+    time_out = time_out.rstrip()
+    print(seq_name+","+str(i)+",blast_run,"+time_out)
     sys.stdout.flush()
 
 
