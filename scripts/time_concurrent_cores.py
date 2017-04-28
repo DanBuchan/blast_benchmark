@@ -12,7 +12,6 @@ pp = pprint.PrettyPrinter(indent=4)
 
 
 def run_blast(data):
-
     file_count = data.split("_", 1)[1]
     file_name = data.split("_", 1)[0]
     seq_path = file_name[0:-6]
@@ -40,7 +39,7 @@ print("seq,cores/concurrency,type,time_output")
 for i in range(5, int(sys.argv[2])+1):
     process_list = []
     for j in range(1, i+1):
-        process_list.append([seq+"_"+str(j)])
+        process_list.append(seq+"_"+str(j))
     start_time = time.time()
     p = Pool(i)
     p.map(run_blast, process_list)
