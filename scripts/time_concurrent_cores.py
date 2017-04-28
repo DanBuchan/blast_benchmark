@@ -29,11 +29,11 @@ def run_blast(file):
 
 
 seq = "/home/dbuchan/blast_benchmark/example_sequences/iga1C.fasta"
-process_list = []
 
 print("seq,cores/concurrency,type,time_output")
 # fasta= open("pdb_2015.fasta", "w")
 for i in range(5, int(sys.argv[2])+1):
+    process_list = []
     start_time = time.time()
     process_list += i * [seq]
     p = Pool(i)
