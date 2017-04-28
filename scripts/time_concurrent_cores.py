@@ -4,6 +4,7 @@ import subprocess
 import pprint
 from multiprocessing import Pool
 import sys
+import time
 
 pp = pprint.PrettyPrinter(indent=4)
 # arg 1 : ouput dir
@@ -24,14 +25,20 @@ def run_blast(file):
                          stderr=subprocess.PIPE)
     p.wait()
     print(seq_name+","+str(i)+","+p.stderr.read().decode())
+    sys.stdout.flush()
 
 
 seq = "/home/dbuchan/blast_benchmark/example_sequences/iga1C.fasta"
 process_list = []
 
-print("seq,cores/concurrency,time_output")
+start_time = time.time()
+print("seq,cores/concurrency,time_output,type")
 # fasta= open("pdb_2015.fasta", "w")
 for i in range(5, int(sys.argv[2])+1):
+    start_time = time.time()
     process_list += i * [seq]
     p = Pool(i)
     p.map(run_blast, process_list)
+
+end_time = time.time()
+print("Elapsed time was %g seconds" % (end_time - start_time))
