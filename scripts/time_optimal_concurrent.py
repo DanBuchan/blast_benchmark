@@ -10,9 +10,8 @@ import time
 
 
 pp = pprint.PrettyPrinter(indent=4)
-# arg 1 : pool size
-# arg 2 : directory
-# arg 3 : ouput dir
+# arg 1 : directory
+# arg 2 : ouput dir
 
 
 def run_blast(file):
@@ -22,7 +21,7 @@ def run_blast(file):
     exe = "/usr/local/bin/psiblast"
     # db = "/data/uniref/uniref90.fasta"
     db = "/data/uniref/uniref90.fasta"
-    cmd = exe+" -query "+file+" -out "+sys.argv[3]+seq_name+".bls -db " + \
+    cmd = exe+" -query "+file+" -out "+sys.argv[2]+seq_name+".bls -db " + \
         db+" -num_threads 2"
     p = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
@@ -30,12 +29,13 @@ def run_blast(file):
 
 
 # fasta= open("pdb_2015.fasta", "w")
-p = Pool(int(sys.argv[1]))
+
 print("pool_size,time")
 sys.stdout.flush()
 for i in range(22, 26):
     start_time = time.time()
-    p.map(run_blast, glob.glob(sys.argv[2]+"*.fasta"))
+    p = Pool(i)
+    p.map(run_blast, glob.glob(sys.argv[1]+"*.fasta"))
     end_time = time.time()
     batch_time = end_time - start_time
     print(str(i)+","+str(batch_time))
