@@ -4,6 +4,7 @@ import subprocess
 import pprint
 from multiprocessing import Pool
 import sys
+import time
 
 # Time blast as we increase the number of cores over the core test set
 
@@ -33,4 +34,7 @@ def run_blast(file):
 # fasta= open("pdb_2015.fasta", "w")
 p = Pool(int(sys.argv[1]))
 print("seq,cores,time_output")
+start_time = time.time()
 p.map(run_blast, glob.glob(sys.argv[2]+"*.fasta"))
+end_time = time.time()
+print(str(i)+","+str(i)+",batch,"+str(batch_time))
