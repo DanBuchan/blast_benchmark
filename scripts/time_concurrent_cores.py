@@ -33,7 +33,7 @@ def run_blast(data):
     sys.stdout.flush()
 
 
-seq = "/home/dbuchan/blast_benchmark/example_sequences/iga1C.fasta"
+seq = "/home/dbuchan/blast_benchmark/example_sequences/titin.fasta"
 
 print("seq,cores/concurrency,type,time_output")
 # fasta= open("pdb_2015.fasta", "w")
