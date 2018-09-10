@@ -1,7 +1,7 @@
 import glob
 import shlex
 import subprocess
-from multiprocessing import Pool
+from multiprocessing import Pool, Lock, Value
 import sys
 import time
 import random
@@ -20,13 +20,15 @@ OUTPUT = sys.argv[3]
 RUN_TIME = float(sys.argv[4])
 RAND_SEQ = True if sys.argv[5] == 'random' else False
 
-def run_blast(file):
+def run_blast(file, jobs, lock):
     exe = "/usr/local/bin/psiblast"
     db = "/data/uniref/uniref90.fasta"
     cmd = exe+" -query "+file+" -out out.xml -out_pssm out.pssm -db " + \
               db+" -outfmt 5 -inclusion_ethresh 0.001 -num_iterations 3 -num_alignments 1 -num_threads 1"
     p = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     p.wait()
+    with lock:
+        jobs.Value += 1
 
 
 #create pool
@@ -34,6 +36,9 @@ p = Pool(POOL_SIZE)
 #get all fasta files
 files = glob.glob(INPUT+"*.fasta")
 num_files = len(files)
+#initialize job counter and lock
+jobs = Value('i', 0)
+lock = Lock()
 
 #execute for given time
 timeout = time.time() + RUN_TIME*3600
@@ -41,15 +46,15 @@ if RAND_SEQ:
     while time.time() < timeout:
         try:
             #select a random sample of files to fill the pool
-            rand_files = random.sample(files, POOL_SIZE)
+            rand_files = random.sample(files, POOL_SIZE, jobs, lock)
             p.map(run_blast, rand_files)
         except ValueError:
             print("Pool size must be less than or equal to number of files")
 else:
     while time.time() < timeout:
-        p.map(run_blast, files[0] * POOL_SIZE)
+        p.map(run_blast, files[0] * POOL_SIZE, jobs, lock)
 
 
-print("Excess time: "+str(time.time() - RUN_TIME*3600))
+print("Jobs completed: "+str(jobs.Value)+"\nExcess time: "+str(time.time() - RUN_TIME*3600))
 
 
