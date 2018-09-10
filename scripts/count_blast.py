@@ -20,7 +20,14 @@ OUTPUT = sys.argv[3]
 RUN_TIME = float(sys.argv[4])
 RAND_SEQ = True if sys.argv[5] == 'random' else False
 
+#initialize job counter and lock
+jobs = Value('i', 0)
+lock = Lock()
+
+
 def run_blast(file):
+    global jobs
+    global lock
     exe = "/usr/local/bin/psiblast"
     db = "/data/uniref/uniref90.fasta"
     cmd = exe+" -query "+file+" -out out.xml -out_pssm out.pssm -db " + \
@@ -36,11 +43,6 @@ p = Pool(POOL_SIZE)
 #get all fasta files
 files = glob.glob(INPUT+"*.fasta")
 num_files = len(files)
-#initialize job counter and lock
-global jobs
-jobs = Value('i', 0)
-global lock
-lock = Lock()
 
 #execute for given time
 timeout = time.time() + RUN_TIME*3600
@@ -54,9 +56,9 @@ if RAND_SEQ:
             print("Pool size must be less than or equal to number of files")
 else:
     while time.time() < timeout:
-        p.map(run_blast, files[0] * POOL_SIZE)
+        p.map(run_blast, [files[0]] * POOL_SIZE)
 
 
-print("Jobs completed: "+str(jobs.value)+"\nExcess time: "+str(time.time() - RUN_TIME*3600))
+print("Jobs completed: "+str(jobs.value)+"\nExcess time: "+str(time.time() - timeout))
 
 
