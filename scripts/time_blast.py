@@ -25,9 +25,13 @@ def run_blast(file):
     for i in range(1, 11):
         cmd = exe+" -query "+file+" -out "+sys.argv[3]+seq_name+".bls -db " + \
               db+" -num_threads "+str(i)
+        start_time = time.time()
         p = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE)
         p.wait()
+        end_time = time.time()
+        runtime = end_time = start_time
+        print(runtime)
         print(seq_name+","+str(i)+","+p.stderr.read().decode())
 
 

@@ -28,9 +28,9 @@ lock = Lock()
 def run_blast(file):
     global jobs
     global lock
-    exe = "/usr/local/bin/psiblast"
+    exe = "/home/dbuchan/ncbi-blast-2.2.31+-src/c++/ReleaseMT/bin/psiblast"
     db = "/data/uniref/uniref90.fasta"
-    cmd = exe+" -query "+file+" -out out.xml -out_pssm out.pssm -db " + \
+    cmd = exe+" -query "+file+" -out "+OUTPUT+"out.xml -out_pssm out.pssm -db " + \
               db+" -outfmt 5 -inclusion_ethresh 0.001 -num_iterations 3 -num_alignments 1 -num_threads 1"
     p = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     p.wait()
@@ -45,8 +45,8 @@ files = glob.glob(INPUT+"*.fasta")
 
 #execute for given number of jobs
 start_time = time.time()
-if RAND_SEQ:   
-    while jobs.value < RUN_NUMBER
+if RAND_SEQ:
+    while jobs.value < RUN_NUMBER:
         try:
             #select a random sample of files to fill the pool
             rand_files = random.sample(files, POOL_SIZE)
